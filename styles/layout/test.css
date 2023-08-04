@@ -1,0 +1,12 @@
+@media print {
+  .p-editor-content.ql-container.ql-snow:first-child{
+    overflow: hidden;
+    height: 1000px;
+  }
+  .p-editor-content.ql-container.ql-snow{
+    /* background-color: red; */
+    height: 100% !important;
+    border: none;
+    padding: 80px;
+  }
+}
