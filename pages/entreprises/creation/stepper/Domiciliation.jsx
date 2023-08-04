@@ -19,7 +19,7 @@ export default function Domiciliation(props) {
   const currentDate = new Date().toLocaleDateString();
   const [contratDomiciliation, setContratDomiciliation] = useState('');
   const [annex, setAnnex] = useState('');
-  const [files, setFile] = {domiciliation:"",annexe:""};
+  // const [files, setFile] = {domiciliation:"",annexe:""};
   const [visible, setVisible] = useState(false);
   const Entreprise = ["Meta", "Appel", "Tesla", "AliBaba", "AliMama"];
   const [DataFormUpdate, setDataFormUpdate] = useState({
@@ -109,7 +109,7 @@ export default function Domiciliation(props) {
       const pdfBytes = await pdfDoc.save()
       setPdfBytesContrat(pdfBytes);
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      setFile({...files, domiciliation:blob});
+      // setFile({...files, domiciliation:blob});
     }
     const generatePDFAnnexe = async () => {
       const formUrl = '../pdfs/Annexe(formfill).pdf';
@@ -165,7 +165,7 @@ export default function Domiciliation(props) {
       const pdfBytes = await pdfDoc.save()
       setPdfBytesAnnexe(pdfBytes);
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      setFile({...files, annexe:blob});
+      // setFile({...files, annexe:blob});
     }
     generatePDFDomiciliation()
     generatePDFAnnexe()
