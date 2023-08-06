@@ -178,7 +178,6 @@ const EmptyPage = () => {
       showError();
     } else {
       setShowPayment(false);
-
       instance
         .post("/auth/register", {
           first_name,
@@ -192,7 +191,20 @@ const EmptyPage = () => {
         .then(({ data }) => {
           if (data.response) {
             showSuccess();
-            setError({});
+            instance.post(
+              "/auth/add_payment/" + data.id,
+              {
+                amount: DataPaiment.avance,
+                methode: DataPaiment.mode_paiement,
+                remaining: DataPaiment.reste,
+                date: DataPaiment.date_decheance,
+                state: DataPaiment.etat_paiement,
+                observation: DataPaiment.observation,
+                file:'',
+                passed: DataPaiment.passed
+              }
+            );
+            // setError({});
           } else {
             setError(data);
           }
