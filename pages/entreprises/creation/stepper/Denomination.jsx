@@ -51,6 +51,9 @@ export default function Denomination(props) {
     adresse: ""
   });
   //########################## personne
+  const [isSuperAdmin, setIsSuperAdmin] = useState(true);
+  const [Affectation, setAffectation] = useState([]);
+  const [affectedTo, setAffectedTo] = useState({});
   const [personneFormUpdate, setPersonneFormUpdate] = useState([{
     id: 1,
     user_type: "",
@@ -122,16 +125,23 @@ export default function Denomination(props) {
       )
       console.log(response);
     }
+    if (props.companyId) {
+      getCompanyInfo();
+    }
     const getUsers = async () => {
       const response = await axios.get('auth/users');
       console.log(response);
       setUsers(response.data);
     }
-    if (props.companyId) {
-      getCompanyInfo();
+    const getAffectation = async() => {
+      const response = await axios.get('/affectation/get_affectations');
+      setAffectation(response.data.data);
+      console.log(response)
     }
     getUsers();
+    getAffectation()
   }, [])
+  //client ident
   const selectedUserTemplate = (option, props) => {
     if (option) {
       return (
@@ -154,8 +164,32 @@ export default function Denomination(props) {
       </div>
     );
   };
+  //client affectation
+  const selectedAffectationTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="flex align-items-center">
+          <div style={{ width: '110px' }}>{option.name}</div>
+          <div style={{ width: '150px' }}>{option.city}</div>
+          <div>{option.address}</div>
+        </div>
+      );
+    }
+
+    return <span>{props.placeholder}</span>;
+  };
+  const affectationOptionTemplate = (option) => {
+    return (
+      <div className="flex align-items-center">
+        <div style={{ width: '110px' }}>{option.name}</div>
+        <div style={{ width: '150px' }}>{option.city}</div>
+        <div>{option.address}</div>
+      </div>
+    );
+  };
   const handleSubmit = async () => {
     const data = {
+      affectation:affectedTo.id,
       owner_id: owner.id,
       client: {
         email: FormUpdate.email,
@@ -183,7 +217,7 @@ export default function Denomination(props) {
         description: 'sdfa'
       },
       users:personneFormUpdate,
-      status: 'PE',
+      status: 'AP',
       formJuridique: StepperFormUpdate.formeJuridrique,
       capital: StepperFormUpdate.capital,
       address: StepperFormUpdate.adresse
@@ -192,6 +226,7 @@ export default function Denomination(props) {
     const response = await axios.post('/company/create_company', data);
     if (response.data.company_id && fileUpload) {
       handleUpload(response.data.company_id);
+    }else if(response.data.company_id){
       props.setCompanyId(response.data.company_id);
     }
     console.log(response)
@@ -246,7 +281,20 @@ export default function Denomination(props) {
               placeholder="sélectionner l'identité du client demandeur"
             />
           </div>
-
+          {isSuperAdmin && <div className="field col-12 md:col-12">
+            <label htmlFor="Civilite">affectation</label>
+            <Dropdown
+              id="Civilite"
+              filter
+              value={affectedTo}
+              valueTemplate={selectedAffectationTemplate}
+              optionLabel="first_name"
+              onChange={(e) => setAffectedTo(e.target.value)}
+              options={Affectation}
+              itemTemplate={affectationOptionTemplate}
+              placeholder="sélectionner l'affectation"
+            />
+          </div>}
         </div>
       </Fieldset>
       <Fieldset legend="Information de demandeur">

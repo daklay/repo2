@@ -9,6 +9,7 @@ import { SelectButton } from 'primereact/selectbutton';
 //pdf lib
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import axios from '../../../api/axios';
+import GetFiles from '../components/GetFiles';
 
 
 export default function Domiciliation(props) {
@@ -20,6 +21,8 @@ export default function Domiciliation(props) {
   const [contratDomiciliation, setContratDomiciliation] = useState('');
   const [annex, setAnnex] = useState('');
   // const [files, setFile] = {domiciliation:"",annexe:""};
+  const [fileAnnexe, setFileSendAnnexe] = useState();
+  const [domiciliation, setFileSendDomiciliation] = useState();
   const [visible, setVisible] = useState(false);
   const Entreprise = ["Meta", "Appel", "Tesla", "AliBaba", "AliMama"];
   const [DataFormUpdate, setDataFormUpdate] = useState({
@@ -64,6 +67,11 @@ export default function Domiciliation(props) {
       const response = await axios.get(`/company/get_company/${props.companyId}`);
       setContratDomiciliation(response.data)
       console.log(response.data);
+      if (response.data.contract.contratDeBail) {
+        setDataFormUpdate({ ...DataFormUpdate, adress: response.data.contract.contratDeBail.adresse })
+      } else {
+        setDataFormUpdate({ ...DataFormUpdate, adress: response.data.contract.domiciliation.adresse })
+      }
     }
     if (props.companyId) {
       getCompanyInfo();
@@ -174,16 +182,36 @@ export default function Domiciliation(props) {
     if (typeof window !== 'undefined') {
       const blob = new Blob([pdfBytesAnnexe], { type: 'application/pdf' });
       const dataUrl = URL.createObjectURL(blob);
-
+      // const file = new File([blob], 'filename.pdf', {type: 'application/pdf'})
+      const pdfData = new Uint8Array(pdfBytesAnnexe);
+      // const base64String = btoa(String.fromCharCode(...pdfData));
+      // console.log(pdfBytesAnnexe);
+      console.log(pdfData);
+      console.log(blob);
+      // console.log(base64String);
+      // console.log(file);
       return (
-        <iframe
-          src={dataUrl}
-          // src={'../pdfs/rc1.pdf'}
-          title="PDF Viewer"
-          width="100%"
-          height="500px"
-        >
-        </iframe>
+        <>
+          <iframe
+            src={dataUrl}
+            // src={'../pdfs/rc1.pdf'}
+            title="PDF Viewer"
+            width="100%"
+            height="500px"
+          >
+          </iframe>
+          <Button label="envoyer au client" className="p-button-success" onClick={async() => {
+            const formDataFile1 = new FormData();
+            const blob = new Blob([pdfBytesAnnexe], { type: 'application/pdf' });
+            // const file = new File([blob], 'filename.pdf', {type: 'application/pdf'});
+            formDataFile1.append('file', blob, 'test.pdf');
+            formDataFile1.append('step', props.current_step);
+            formDataFile1.append('file_type', 'ID');
+            const responseFile1 = await axios.post(`/filemanager/addFile/${props.companyId}`, formDataFile1);
+            console.log(responseFile1)
+            console.log(file)
+          }} />
+        </>
       )
     }
   }
@@ -221,7 +249,6 @@ export default function Domiciliation(props) {
     <>
       <div className="p-fluid formgrid grid">
         <div className="field col-12 md:col-12">
-          <p>adresse siège social :{DataFormUpdate.adress}</p>
           <span className="p-buttonset">
             <Button label="contrat de bail" style={domiciliationData.contratBail ? { color: '' } : { backgroundColor: 'white', color: 'grey' }} onClick={() => handleContrat(true)} />
             <Button label="contrat de domiciliation" style={domiciliationData.contratBail ? { backgroundColor: 'white', color: 'grey' } : { color: '' }} onClick={() => handleContrat(false)} />
@@ -296,8 +323,8 @@ export default function Domiciliation(props) {
                 label="imprimer"
               />
             </div> */}
-              <div className="field col-12 md:col-4">
-                <Button label="envoyer au client" className="p-button-success" />
+              <div className="field col-12 md:col-4 mb-5">{/*//!! mb-5 */}
+                {/* <Button label="envoyer au client" className="p-button-success" /> */}
               </div>
               <Dialog visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
                 <Fieldset legend="Formulaire de recherche">
@@ -402,6 +429,7 @@ export default function Domiciliation(props) {
         }
         {/* <div className="p-fluid formgrid grid mt-4"> */}
       </div>
+      <GetFiles companyId={props.companyId} step={props.current_step}/>
       <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>

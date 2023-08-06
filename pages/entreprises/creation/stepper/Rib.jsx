@@ -3,8 +3,9 @@ import { SelectButton } from 'primereact/selectbutton';
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Fieldset } from "primereact/fieldset";
+import GetFiles from "../components/GetFiles";
 
-export default function Rib() {
+export default function Rib(props) {
   const [ribNot, setRibNot] = useState();
   const [DataFormUpdate, setDataFormUpdate] = useState({
     rib: ""
@@ -64,6 +65,7 @@ export default function Rib() {
         />
       </div>
     </div>
+    <GetFiles companyId={props.companyId} step={props.current_step}/>
     <div className="flex">
       <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
         <form>

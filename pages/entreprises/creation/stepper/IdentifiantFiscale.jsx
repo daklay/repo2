@@ -6,8 +6,9 @@ import { InputText } from "primereact/inputtext";
 //pdf lib
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import { Fieldset } from "primereact/fieldset";
+import GetFiles from "../components/GetFiles";
 
-export default function IdentifiantFiscale() {
+export default function IdentifiantFiscale(props) {
   const [identiteNot, setIdentiteNot] = useState();
   const [pdfBytes, setPdfBytes] = useState(null);
   const [DataFormUpdate, setDataFormUpdate] = useState({
@@ -136,6 +137,7 @@ export default function IdentifiantFiscale() {
           />
         </div>
       </div>
+    <GetFiles companyId={props.companyId} step={props.current_step}/>
       <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>

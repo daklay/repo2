@@ -9,6 +9,9 @@ import { ToggleButton } from 'primereact/togglebutton';
 import { RadioButton } from 'primereact/radiobutton';
 import axios from "../../../api/axios";
 import { Fieldset } from "primereact/fieldset";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import GetFiles from "../components/GetFiles";
 
 export default function CertificatNegatif(props) {
   const options = [{ icon: 'pi pi-clock', value: "En cours" }, { icon: 'pi pi-check', value: "Validé" }, { icon: 'pi pi-check', value: "pret" }];
@@ -111,7 +114,11 @@ export default function CertificatNegatif(props) {
     });
     console.log({ ice: FormUpdate.ice, name: FormUpdate.denomination, certifNumber: FormUpdate.numeroCertif });
     console.log(response);
-    if (response.data=='Comapny moved to step 2' && fileUpload.certificatNegatif && fileUpload.attestation) {
+    console.log('1', response.data == 'Comapny moved to step 2')
+    console.log('2', fileUpload.certificatNegatif)
+    console.log('3', fileUpload.attestation)
+    if (response.data == 'Comapny moved to step 2' && fileUpload.certificatNegatif && fileUpload.attestation) {
+      console.log("sending files")
       handleUpload(props.companyId);
     }
   }
@@ -119,15 +126,15 @@ export default function CertificatNegatif(props) {
     const formDataFile1 = new FormData();
     formDataFile1.append('file', fileUpload.certificatNegatif);
     formDataFile1.append('step', props.current_step);
-    formDataFile1.append('file_type', 'ID');
+    formDataFile1.append('file_type', 'CN');
     const responseFile1 = await axios.post(`/filemanager/addFile/${company_id}`, formDataFile1);
     console.log(responseFile1);
     const formDataFile2 = new FormData();
     formDataFile2.append('file', fileUpload.attestation);
     formDataFile2.append('step', props.current_step);
-    formDataFile2.append('file_type', 'ID');
+    formDataFile2.append('file_type', 'ICE');
     const responseFile2 = await axios.post(`/filemanager/addFile/${company_id}`, formDataFile2);
-    console.log(responseFile2);
+    console.log(responseFile1);
   }
   return (
     <>
@@ -283,7 +290,7 @@ export default function CertificatNegatif(props) {
           </div>
         </> :
         <div>
-          <p>Dénomination validée:{FormUpdate.name}</p>
+          <p>Dénomination validée:{FormUpdate.name || FormUpdate.denomination}</p>
           <p>ICE:{FormUpdate.ice}</p>
           <p>Numéro de certificat :{FormUpdate.numeroCertif}</p>
           <p>Date de certificat:{FormUpdate.date}</p>
@@ -300,6 +307,7 @@ export default function CertificatNegatif(props) {
           </div>
         </div>
       }
+      <GetFiles companyId={props.companyId} step={props.current_step}/>
       <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>
@@ -340,6 +348,7 @@ export default function CertificatNegatif(props) {
           </form>
         </Fieldset>
       </div>
+      <button onClick={() => { setValideCn(false) }}>update</button>
     </>
   )
 }

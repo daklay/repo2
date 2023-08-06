@@ -4,8 +4,9 @@ import { SelectButton } from 'primereact/selectbutton';
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Fieldset } from "primereact/fieldset";
+import GetFiles from "../components/GetFiles";
 
-export default function ValidationRc() {
+export default function ValidationRc(props) {
   const [validationNot, setValidationNot] = useState();
   const [DataFormUpdate, setDataFormUpdate] = useState({
     rc: ""
@@ -71,6 +72,7 @@ export default function ValidationRc() {
           />
         </div>
       </div>
+    <GetFiles companyId={props.companyId} step={props.current_step}/>
       <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>

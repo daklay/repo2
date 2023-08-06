@@ -4,6 +4,7 @@ import { SelectButton } from 'primereact/selectbutton';
 import { useState } from "react";
 import axios from "../../../api/axios";
 import { Fieldset } from "primereact/fieldset";
+import GetFiles from "../components/GetFiles";
 
 export default function SignatureLegalisation(props) {
   const [signatureNot, setSignatureNot] = useState();
@@ -60,6 +61,7 @@ export default function SignatureLegalisation(props) {
           onClick={() => sendNotif()}
         />
       </div>
+      <GetFiles companyId={props.companyId} step={props.current_step}/>
       <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>

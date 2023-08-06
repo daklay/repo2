@@ -3,8 +3,9 @@ import { Fieldset } from 'primereact/fieldset';
 import { InputText } from 'primereact/inputtext';
 import { SelectButton } from 'primereact/selectbutton';
 import { useState } from 'react';
+import GetFiles from '../components/GetFiles';
 
-export default function EnregistrerDocument() {
+export default function EnregistrerDocument(props) {
   const [enregistreNot, setEnregistreNot] = useState();
   const options = [{ icon: 'pi pi-clock', value: "En cours" }, { icon: 'pi pi-check', value: "Validé" }, { icon: 'pi pi-check', value: "pret" }];
   const [value, setValue] = useState(options[0]);
@@ -35,45 +36,49 @@ export default function EnregistrerDocument() {
     console.log(response);
   }
   return (
-    <div className="flex">
-      <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
-        <form>
-          <div className="p-fluid formgrid grid">
-            <div className="flex justify-content-center">
-              <SelectButton value={btnStatus} onChange={(e) => {
-                setBtnStatus(e.value);
-                console.log(e.value);
-                handleStatus();
-              }}
-                options={options} itemTemplate={justifyTemplate} />
-            </div>
+    <>
+      <GetFiles companyId={props.companyId} step={props.current_step} />
+      <div className="flex">
 
-          </div>
-        </form>
-      </Fieldset>
-      <Fieldset className="mt-3" style={{ width: '80%', height: '140px' }} legend="Action requise">
-        <form>
-          <div className="p-fluid formgrid grid">
-            <div className="field col-12 md:col-8">
-              <InputText
-                id="nom"
-                name="nom"
-                value={status.actionRequise}
-                placeholder="Action requise"
-                onChange={(e) =>
-                  setStatus({
-                    ...status,
-                    actionRequise: e.target.value,
-                  })
-                }
-              />
+        <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
+          <form>
+            <div className="p-fluid formgrid grid">
+              <div className="flex justify-content-center">
+                <SelectButton value={btnStatus} onChange={(e) => {
+                  setBtnStatus(e.value);
+                  console.log(e.value);
+                  handleStatus();
+                }}
+                  options={options} itemTemplate={justifyTemplate} />
+              </div>
+
             </div>
-            <div className="field col-12 md:col-4">
-              <Button label="envoyer au client" onClick={handleActionRequise} />
+          </form>
+        </Fieldset>
+        <Fieldset className="mt-3" style={{ width: '80%', height: '140px' }} legend="Action requise">
+          <form>
+            <div className="p-fluid formgrid grid">
+              <div className="field col-12 md:col-8">
+                <InputText
+                  id="nom"
+                  name="nom"
+                  value={status.actionRequise}
+                  placeholder="Action requise"
+                  onChange={(e) =>
+                    setStatus({
+                      ...status,
+                      actionRequise: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="field col-12 md:col-4">
+                <Button label="envoyer au client" onClick={handleActionRequise} />
+              </div>
             </div>
-          </div>
-        </form>
-      </Fieldset>
-    </div>
+          </form>
+        </Fieldset>
+      </div>
+    </>
   )
 }

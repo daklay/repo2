@@ -7,8 +7,9 @@ import { InputText } from "primereact/inputtext";
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import { Fieldset } from "primereact/fieldset";
 import { useReactToPrint } from "react-to-print";
+import GetFiles from "../components/GetFiles";
 
-export default function Jal() {
+export default function Jal(props) {
   const [text, setText] = useState(`<div class="ql-editor" data-gramm="false" contenteditable="true"><p class="ql-align-center"><strong>«…………………….» SARL </strong></p><p><br></p><p><strong><u>Objet&nbsp;:</u> </strong>Annonce Légale<strong> </strong></p><p><br></p><p><strong>Monsieur&nbsp;;</strong></p><p class="ql-align-justify"><br></p><p class="ql-align-justify">Prière d’insérer l’annonce légale conformément au texte ci-dessous&nbsp;:</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>A</strong>ux termes d’un acte sous seing privé en date du <strong>…………………. à ……………………………….</strong>, il a été constitué une société S.A.R.L ayant les caractéristiques suivantes:</p><p class="ql-align-center"><br></p><p>1)<u> LA DENOMINATION :</u>&nbsp;<strong><u>«……………………………..» SARL </u></strong></p><p>2)<u> SIEGE SOCIAL:&nbsp;</u><strong>……………………………………………………………………………………………………………</strong></p><p>3)<u> L’OBJET SOCIAL&nbsp;:</u><strong> La société a pour objet.</strong></p><p>…………………………………………………………………………………………………………………………………<strong>.</strong></p><p>4) <u>CAPITAL SOCIAL</u>&nbsp;: fixé à la somme <strong>…………………………… (…………,00dhs)</strong> divisé en <strong>………………parts de 100 Dirhams</strong> chacune, attribuées à l'associé en fonction de ses apports à savoir :</p><p>……………………………<strong>. ……………. parts </strong></p><p>……………………………<strong>. .………….. parts </strong></p><p><strong>Total ..………….. parts </strong></p><p><br></p><p><u>5) LA GERANCE&nbsp;:</u></p><p>La société est gérée et administrée par&nbsp;:<strong> ………………………………….., il est </strong>nommé gérant pour une durée illimitée.</p><p><br></p><p class="ql-align-justify"><u>6) LA DUREE</u>&nbsp;: <strong>99 </strong>années à compter du jour de sa constitution définitive. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>L</strong>e dépôt légal a été effectué au tribunal du commerce de <strong>CASABLANCA</strong>. (R.C N°……………………..<strong>). </strong> </p><p class="ql-align-justify">Pour extrait et mention.</p><p class="ql-align-justify"><br></p><h1 class="ql-align-justify"><br></h1><h1 class="ql-align-justify"><br></h1><h1 class="ql-align-justify"><br></h1><h1 class="ql-align-right"><u>La Direction</u></h1><p><br></p></div>`);
   const [pdfBytes, setPdfBytes] = useState(null);
   const [journalNot, setJournalNot] = useState();
@@ -162,6 +163,8 @@ export default function Jal() {
           />
         </div>
       </div>
+    <GetFiles companyId={props.companyId} step={props.current_step}/>
+
       <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>

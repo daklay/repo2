@@ -4,8 +4,9 @@ import { SelectButton } from 'primereact/selectbutton';
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Fieldset } from "primereact/fieldset";
+import GetFiles from "../components/GetFiles";
 
-export default function Model7() {
+export default function Model7(props) {
   const [modelNot, setModelNot] = useState();
   const options = [{ icon: 'pi pi-clock', value: "En cours" }, { icon: 'pi pi-check', value: "Validé" }, { icon: 'pi pi-check', value: "pret" }];
   const [value, setValue] = useState(options[0]);
@@ -57,6 +58,7 @@ export default function Model7() {
         />
       </div>
     </div>
+    <GetFiles companyId={props.companyId} step={props.current_step}/>
     <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>

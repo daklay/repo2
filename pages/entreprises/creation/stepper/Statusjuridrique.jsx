@@ -10,6 +10,7 @@ import { SelectButton } from 'primereact/selectbutton';
 import axios from '../../../api/axios';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import { useReactToPrint } from "react-to-print";
+import GetFiles from "../components/GetFiles";
 
 export default function Statusjuridrique(props) {
   const [statusNot, seStatusNot] = useState();
@@ -495,6 +496,7 @@ export default function Statusjuridrique(props) {
         </div>
       </>
       }
+      <GetFiles companyId={props.companyId} step={props.current_step}/>
       <div className="flex">
         <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
           <form>
