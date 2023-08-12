@@ -6,10 +6,9 @@ import { InputText } from "primereact/inputtext";
 import { Fieldset } from "primereact/fieldset";
 import { Dropdown } from "primereact/dropdown";
 import axios from '../../../api/axios';
+import Status from "../components/Status";
 
 export default function Denomination(props) {
-  const options = [{ icon: 'pi pi-clock', value: "En cours" }, { icon: 'pi pi-check', value: "Validé" }, { icon: 'pi pi-check', value: "pret" }];
-  const [btnStatus, setBtnStatus] = useState(options[0]);
   const [fileUpload, setFileUpload] = useState();
   const [owner, setOwner] = useState(null);
   const [users, setUsers] = useState([]);
@@ -39,10 +38,6 @@ export default function Denomination(props) {
       select: "",
       input: ""
     },
-  });
-  const [status, setStatus] = useState({
-    status: "",
-    actionRequise: ""
   });
   const [StepperFormUpdate, setStepperFormUpdate] = useState({
     formeJuridrique: "",
@@ -170,8 +165,8 @@ export default function Denomination(props) {
       return (
         <div className="flex align-items-center">
           <div style={{ width: '110px' }}>{option.name}</div>
-          <div style={{ width: '150px' }}>{option.city}</div>
-          <div>{option.address}</div>
+          {/* <div style={{ width: '150px' }}>{option.city}</div>
+          <div>{option.address}</div> */}
         </div>
       );
     }
@@ -182,8 +177,8 @@ export default function Denomination(props) {
     return (
       <div className="flex align-items-center">
         <div style={{ width: '110px' }}>{option.name}</div>
-        <div style={{ width: '150px' }}>{option.city}</div>
-        <div>{option.address}</div>
+        {/* <div style={{ width: '150px' }}>{option.city}</div>
+        <div>{option.address}</div> */}
       </div>
     );
   };
@@ -232,26 +227,6 @@ export default function Denomination(props) {
     console.log(response)
     return response;
   }
-  const handleStatus = async (action) => {
-    const data = {
-      status: btnStatus == "En cours" ? 'PE' : btnStatus == "Validé" ? "CO" : "AP",
-      name_one: FormUpdate.propositionDenomination.prop1,
-      name_two: FormUpdate.propositionDenomination.prop2,
-      name_three: FormUpdate.propositionDenomination.prop3,
-    };
-    console.log(data)
-    const response = await axios.put(`/company/update_company/${props.companyId}`, data);
-    console.log(response)
-  }
-  const handleActionRequise = async () => {
-    const response = await axios.post(`/notification/createNotification`, {
-      content: status.actionRequise,
-      company_id: props.companyId,
-      current_step: props.current_step,
-      type: 'AR'
-    });
-    console.log(response);
-  }
   const handleUpload = async (company_id) => {
     const formData = new FormData();
     formData.append('file', fileUpload);
@@ -259,9 +234,6 @@ export default function Denomination(props) {
     formData.append('file_type', 'ID');
     const response = await axios.post(`/filemanager/addFile/${company_id}`, formData);
     console.log(response);
-  }
-  const justifyTemplate = (option) => {
-    return <i className={option.icon}></i>;
   }
   return (
     <>
@@ -791,49 +763,7 @@ export default function Denomination(props) {
       <div className="pl-1 pt-3">
         <Button label="Enregistrer" severity="success" onClick={handleSubmit} />
       </div>
-      <div className="flex">
-        <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
-          <form>
-            <div className="p-fluid formgrid grid">
-              <div className="flex justify-content-center">
-                <SelectButton value={btnStatus} onChange={(e) => {
-                  setBtnStatus(e.value);
-                  console.log(e.value);
-                  handleStatus();
-                }}
-                  options={options} itemTemplate={justifyTemplate} />
-              </div>
-
-            </div>
-          </form>
-        </Fieldset>
-        <Fieldset className="mt-3" style={{ width: '80%', height: '140px' }} legend="Action requise">
-          <form>
-            <div className="p-fluid formgrid grid">
-              <div className="field col-12 md:col-8">
-                <InputText
-                  id="nom"
-                  name="nom"
-                  value={status.actionRequise}
-                  placeholder="Action requise"
-                  onChange={(e) =>
-                    setStatus({
-                      ...status,
-                      actionRequise: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="field col-12 md:col-4">
-                <Button label="envoyer au client" onClick={handleActionRequise} />
-              </div>
-
-            </div>
-          </form>
-        </Fieldset>
-
-      </div>
-
+      <Status endpoint={''} companyId={props.companyId} current_step={props.current_step}/>
     </>
   )
 }

@@ -15,6 +15,7 @@ const AppMenu = () => {
         {
           label: "Entreprises",
           icon: "pi pi-fw pi-briefcase",
+          url: "/entreprises",
           items: [
             {
               label: "Creation",
@@ -39,59 +40,94 @@ const AppMenu = () => {
           ],
         },
         {
-            label: 'utilisateurs',
-            icon: 'pi pi-fw pi-user',
-            items: [
-                {
-                    label: 'teams',
-                    icon: 'pi pi-fw pi-users',
-                    to: '/utilisateurs/teams'
-                },
-                {
-                    label: 'prospects',
-                    icon: 'pi pi-fw pi-user-plus',
-                    to: '/utilisateurs/prospects'
-                },
-                {
-                    label: 'clients',
-                    icon: 'pi pi-fw pi-user',
-                    to: '/utilisateurs/clients'
-                }
-            ]
+          label: "utilisateurs",
+          icon: "pi pi-fw pi-user",
+          items: [
+            {
+              label: "staff",
+              icon: "pi pi-fw pi-users",
+              to: "/utilisateurs/teams",
+            },
+            {
+              label: "prospects",
+              icon: "pi pi-fw pi-user-plus",
+              to: "/utilisateurs/prospects",
+            },
+            {
+              label: "clients",
+              icon: "pi pi-fw pi-user",
+              to: "/utilisateurs/clients",
+            },
+          ],
         },
         ,
         {
-            label: 'bibliothèque',
-            icon: 'pi pi-fw pi-book',
-            to: '/bibliotheque'
-            // items: [
-            //     {
-            //         label: 'teams',
-            //         icon: 'pi pi-fw pi-users',
-            //         to: '/utilisateurs/teams'
-            //     },
-            //     {
-            //         label: 'prospects',
-            //         icon: 'pi pi-fw pi-user-plus',
-            //         to: '/utilisateurs/prospects'
-            //     },
-            //     {
-            //         label: 'clients',
-            //         icon: 'pi pi-fw pi-user',
-            //         to: '/utilisateurs/clients'
-            //     }
-            // ]
+          label: "bibliothèque",
+          icon: "pi pi-fw pi-book",
+          to: "/bibliotheque",
+          // items: [
+          //     {
+          //         label: 'teams',
+          //         icon: 'pi pi-fw pi-users',
+          //         to: '/utilisateurs/teams'
+          //     },
+          //     {
+          //         label: 'prospects',
+          //         icon: 'pi pi-fw pi-user-plus',
+          //         to: '/utilisateurs/prospects'
+          //     },
+          //     {
+          //         label: 'clients',
+          //         icon: 'pi pi-fw pi-user',
+          //         to: '/utilisateurs/clients'
+          //     }
+          // ]
         },
         {
-            label: 'paramétrage',
-            icon: 'pi pi-fw pi-cog',
-            items: [
-                {
-                    label: 'affectation',
-                    icon: 'pi pi-fw pi-users',
-                    to: '/parametrage/affectation'
-                }
-            ]
+          label: "paramétrage",
+          icon: "pi pi-fw pi-cog",
+          items: [
+            {
+              label: "affectation",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/affectation",
+            },
+            {
+              label: "Packs",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/packs",
+            },
+            {
+              label: "Forme juridique",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/formejuridique",
+            },
+            {
+              label: "Nature de service",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/natureservice",
+            },
+            {
+              label: "Nature d’activité",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/naturedactivite",
+            },
+            {
+              label: "Service demandé",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/servicedemande",
+            },
+            {
+              label: "Notifications clients",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/notificationsclient",
+            },
+            {
+              label: "Rappel Staff ",
+              icon: "pi pi-fw pi-users",
+              to: "/parametrage/rappelstaff ",
+            },
+          ],
         },
       ],
     },

@@ -193,7 +193,7 @@ const EmptyPage = () => {
   const [valideCn, setValideCn] = useState(false);
   const [visible2, setVisible2] = useState(false);
   // const [btnSelecet, setBtnSelecet] = useState(false);
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
   // const [radiobtnpv, setRadiobtnpv] = useState('');
   const [ingredient, setIngredient] = useState("");
   // const [stepperPersonne, setStepperPersonne] = useState([{ id: 1 }]);

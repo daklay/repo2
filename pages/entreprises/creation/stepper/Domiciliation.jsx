@@ -10,6 +10,7 @@ import { SelectButton } from 'primereact/selectbutton';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import axios from '../../../api/axios';
 import GetFiles from '../components/GetFiles';
+import Status from '../components/Status';
 
 
 export default function Domiciliation(props) {
@@ -65,12 +66,12 @@ export default function Domiciliation(props) {
   useEffect(() => {
     const getCompanyInfo = async () => {
       const response = await axios.get(`/company/get_company/${props.companyId}`);
-      setContratDomiciliation(response.data)
+      setContratDomiciliation(response.data);
       console.log(response.data);
-      if (response.data.contract.contratDeBail) {
-        setDataFormUpdate({ ...DataFormUpdate, adress: response.data.contract.contratDeBail.adresse })
+      if (response.data.contract?.contratDeBail){
+        setDataFormUpdate({ ...DataFormUpdate, adress: response.data.contract?.contratDeBail.adresse })
       } else {
-        setDataFormUpdate({ ...DataFormUpdate, adress: response.data.contract.domiciliation.adresse })
+        setDataFormUpdate({ ...DataFormUpdate, adress: response.data.contract?.domiciliation.adresse })
       }
     }
     if (props.companyId) {
@@ -99,29 +100,32 @@ export default function Domiciliation(props) {
       const field13 = form.getTextField('field13')//date de systeme (curr)
       const field14 = form.getTextField('field14')
       const field15 = form.getTextField('field15')
+      const field16 = form.getTextField('field16')
+      const field17 = form.getTextField('field17')
+      
       field1.setText(contratDomiciliation.name)
-      field2.setText(contratDomiciliation.certificatNegatif?.ice)
-      // field3.setText(contratDomiciliation.user.userType)
-      field4.setText(contratDomiciliation.user?.nationality)
-      field5.setText(contratDomiciliation.user?.birth_date)
-      field6.setText(contratDomiciliation.user?.identity?.number)
-      // field7.setText('adresse')
-      field8.setText(contratDomiciliation.user?.phone)
-      field9.setText(contratDomiciliation.user?.email)
-      // field10.setText('duree')
-      // field11.setText('datedebut')
-      // field12.setText('datefin')
-      // field13.setText('pris')
-      // field14.setText('duree')
-      field15.setText(currentDate)
-      const pdfBytes = await pdfDoc.save()
+      field2.setText('')
+      field3.setText(contratDomiciliation.certificatNegatif?.ice);
+      field4.setText('');
+      field5.setText(`${contratDomiciliation.user?.first_name} ${contratDomiciliation.user?.last_name}`);
+      field6.setText(contratDomiciliation.user?.nationality)
+      field7.setText(contratDomiciliation.user?.birth_date)
+      field8.setText(contratDomiciliation.user?.identity_number)
+      field9.setText(contratDomiciliation.user?.address)
+      field10.setText(contratDomiciliation.user?.phone)
+      field11.setText(contratDomiciliation.user?.email)
+      // field12.setText('duree')
+      // field13.setText('datedebut')
+      // field14.setText('datefin')
+      // field15.setText('pris')
+      // field16.setText('duree')
+      field17.setText(currentDate)
+      const pdfBytes = await pdfDoc.save();
       setPdfBytesContrat(pdfBytes);
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      // setFile({...files, domiciliation:blob});
     }
     const generatePDFAnnexe = async () => {
       const formUrl = '../pdfs/Annexe(formfill).pdf';
-      const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer())
+      const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(formPdfBytes);
       const form = pdfDoc.getForm()
       const field1 = form.getTextField('field1')// proposition denomination step1
@@ -147,6 +151,9 @@ export default function Domiciliation(props) {
       const field21 = form.getTextField('field21')
       const field22 = form.getTextField('field22')
       const field23 = form.getTextField('field23')
+      const field24 = form.getTextField('field24')
+      const field25 = form.getTextField('field25')
+
       field1.setText(`${contratDomiciliation.user?.first_name} ${contratDomiciliation.user?.last_name}`)
       field2.setText(contratDomiciliation.user?.birth_date)
       field3.setText(contratDomiciliation.user?.identity_number)
@@ -159,17 +166,18 @@ export default function Domiciliation(props) {
       field10.setText(contratDomiciliation?.name)
       // field11.setText('adress')
       field12.setText(contratDomiciliation.user?.phone)
-      field13.setText(contratDomiciliation.user?.first_name)
+      field13.setText(`${contratDomiciliation.user?.first_name} ${contratDomiciliation.user?.last_name}`)
       field14.setText(contratDomiciliation.user?.birth_date)
       field15.setText(contratDomiciliation.user?.identity_number)
       // field16.setText('adress')
       field17.setText(contratDomiciliation?.name)
-      field18.setText(`${contratDomiciliation.user?.first_name} ${contratDomiciliation.user?.last_name}`)
-      field19.setText(contratDomiciliation.user?.birth_date)
-      field20.setText(contratDomiciliation.user?.identity_number)
-      // field21.setText('adress')
-      field22.setText(contratDomiciliation?.name)
-      field23.setText(currentDate)
+      // field18.setText(``)
+      field19.setText(`${contratDomiciliation.user?.first_name} ${contratDomiciliation.user?.last_name}`)
+      field20.setText(contratDomiciliation.user?.birth_date)
+      field21.setText(contratDomiciliation.user?.identity_number)
+      // field22.setText('adress')
+      field23.setText(contratDomiciliation?.name)
+      field25.setText(currentDate)
       const pdfBytes = await pdfDoc.save()
       setPdfBytesAnnexe(pdfBytes);
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
@@ -183,13 +191,16 @@ export default function Domiciliation(props) {
       const blob = new Blob([pdfBytesAnnexe], { type: 'application/pdf' });
       const dataUrl = URL.createObjectURL(blob);
       // const file = new File([blob], 'filename.pdf', {type: 'application/pdf'})
-      const pdfData = new Uint8Array(pdfBytesAnnexe);
-      // const base64String = btoa(String.fromCharCode(...pdfData));
-      // console.log(pdfBytesAnnexe);
-      console.log(pdfData);
-      console.log(blob);
-      // console.log(base64String);
-      // console.log(file);
+      function Uint8ToString(u8a){
+        var CHUNK_SZ = 0x8000;
+        var c = [];
+        for (var i=0; i < u8a.length; i+=CHUNK_SZ) {
+          c.push(String.fromCharCode.apply(null, u8a.subarray(i, i+CHUNK_SZ)));
+        }
+        return c.join("");
+      }
+      const uint8array = new Uint8Array(pdfBytesAnnexe);
+      var b64encoded = btoa(Uint8ToString(uint8array));
       return (
         <>
           <iframe
@@ -201,15 +212,14 @@ export default function Domiciliation(props) {
           >
           </iframe>
           <Button label="envoyer au client" className="p-button-success" onClick={async() => {
+            console.log('sending ....')
             const formDataFile1 = new FormData();
-            const blob = new Blob([pdfBytesAnnexe], { type: 'application/pdf' });
-            // const file = new File([blob], 'filename.pdf', {type: 'application/pdf'});
-            formDataFile1.append('file', blob, 'test.pdf');
+            formDataFile1.append('file', b64encoded);
             formDataFile1.append('step', props.current_step);
             formDataFile1.append('file_type', 'ID');
-            const responseFile1 = await axios.post(`/filemanager/addFile/${props.companyId}`, formDataFile1);
+            formDataFile1.append('description', 'test');
+            const responseFile1 = await axios.post(`/filemanager/addFile64/${props.companyId}`,formDataFile1);
             console.log(responseFile1)
-            console.log(file)
           }} />
         </>
       )
@@ -430,46 +440,7 @@ export default function Domiciliation(props) {
         {/* <div className="p-fluid formgrid grid mt-4"> */}
       </div>
       <GetFiles companyId={props.companyId} step={props.current_step}/>
-      <div className="flex">
-        <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
-          <form>
-            <div className="p-fluid formgrid grid">
-              <div className="flex justify-content-center">
-                <SelectButton value={btnStatus} onChange={(e) => {
-                  setBtnStatus(e.value);
-                  console.log(e.value);
-                  handleStatus();
-                }}
-                  options={options} itemTemplate={justifyTemplate} />
-              </div>
-
-            </div>
-          </form>
-        </Fieldset>
-        <Fieldset className="mt-3" style={{ width: '80%', height: '140px' }} legend="Action requise">
-          <form>
-            <div className="p-fluid formgrid grid">
-              <div className="field col-12 md:col-8">
-                <InputText
-                  id="nom"
-                  name="nom"
-                  value={status.actionRequise}
-                  placeholder="Action requise"
-                  onChange={(e) =>
-                    setStatus({
-                      ...status,
-                      actionRequise: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="field col-12 md:col-4">
-                <Button label="envoyer au client" onClick={handleActionRequise} />
-              </div>
-            </div>
-          </form>
-        </Fieldset>
-      </div>
+      <Status endpoint={`stepper/domiciliation/${props.companyId}`} companyId={props.companyId} current_step={props.current_step}/>
     </>
   )
 }

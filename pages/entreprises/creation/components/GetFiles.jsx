@@ -53,9 +53,10 @@ export default function GetFiles(props) {
           header="Action"
           style={{ width: "5%" }}
           body={(Domiciliations) => (
-            <div className=" flex ">
-              <Button icon="pi pi-hourglass" onClick={OpenStepper} className="mr-2" rounded />
-            </div>
+            // <div className="flex ">
+            //   <Button icon="pi pi-file-pdf" onClick={OpenStepper} className="mr-2" rounded />
+            // </div>
+            <a href={`https://mapp.pubsilon.com${Domiciliations.file}`} target="_blank">open</a>
           )}
         ></Column>
       </DataTable>

@@ -7,6 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import { Fieldset } from "primereact/fieldset";
 import GetFiles from "../components/GetFiles";
+import Status from "../components/Status";
 
 export default function TaxProfesionelle(props) {
   const [text, setText] = useState(`<div class="ql-editor" data-gramm="false" contenteditable="true"><p>Identification du demandeur Nom et prénom ou raison sociale: …………………………………………………………………………………………………………………………………………… Lieu d’activité : …………………………………………………………………………………………………………………………………………………………………… Domicile fiscal ou siège social : ……………………………………………………………………………………………………………………………………………… Activité : ……………………………………………………………………………………………………………………………………………………………………………… Date de début d’activité : /__/__/- /__/__/-/__/__/__/__/ N° du Registre de commerce (RC) : ……………… ville du RC: …………………… C N I ou carte de séjour n° : /__/__/__/__/__/__/__/__/ N° d’identification à la TP : /__/__/__/__/__/__/__/__/ Tél. : …………………………………………… Fax : ……………………………… E-mail : ………………………………………………………………………………… Objet de la demande - Création d’une personne physique ou morale - Autre - préciser l’objet : ………………………………………………………………………………………………………………………………………… Pièces à joindre Personne physique ou morale déjà créée Le formulaire de la demande servi, daté et signé. Nouvelle personne physique - Une copie du contrat de bail légalisé et enregistré ; - Ou une copie du reçu de loyer légalisé par le propriétaire ; - Ou une copie du titre de propriété (Immeuble, droit au bail ou fonds de commerce) ; - Ou une copie de l’acte de domiciliation légalisé* ; - Une copie de la CNI ou de la carte de séjour ; - Une copie de l’autorisation nécessaire à l’exercice de l’activité (si l’activité est réglementée). Nouvelle Personne morale Cas des Sociétés Anonymes (SA) Cas des Sociétés à Responsabilité Limitée (SARL) Cas des sociétés en nom collectif et les sociétés en commandite - Une copie du contrat de bail légalisé et enregistré ; - Ou une copie du reçu de loyer légalisé par le propriétaire ; - Ou une copie du titre de propriété (Immeuble, droit au bail ou fonds de commerce) ; - Ou une copie de l’acte de domiciliation légalisé* ; - Une copie des statuts enregistrés ; - Une copie de la CNI, de la carte de séjour, du passeport ou du registre de commerce (RC) de l’administrateur ou l’équivalent du RC traduit le cas échéant pour les personnes morales non résidentes ; - Une copie de l’autorisation nécessaire à l’exercice de l’activité (si l’activité est réglementée) ; - Une copie du procès verbal de nomination du gérant s’il n’est pas nommé dans les statuts (pour les SARL). Modèle AAC050F-13I Demande d’attestation d’inscription à la taxe professionnelle (TP) DR/ DP ou DIP de : ………………………..…………....… Subdivision de :…………….………. Date de dépôt : …………………..… N° de dépôt: ……… Cas des coopératives Cas des organismes de placement collectif en valeurs mobilières "OPCVM" Cas des sociétés mutualistes - Une copie de la décision d'agrément telle que publiée au bulletin officiel ; - Une copie des statuts enregistrés ; - Une copie de la CNI du président ; - Une copie du contrat de bail légalisé et enregistré ; - Ou une copie du reçu de loyer légalisé par le propriétaire; - Ou une copie du titre de propriété (immeuble, droit au bail ou fonds de commerce) ; - Ou une copie de l’acte de domiciliation légalisé*. - Une copie du règlement de gestion (fonds commun de placement) ou des statuts enregistrés (société d’investissement à capital variable) ; - Une copie de l’acte d’agrément délivré par le conseil déontologique des valeurs mobilières (CDVM) ; - Une copie du contrat de bail légalisé et enregistré ; - Ou une copie du reçu de loyer légalisé par le propriétaire ; - Ou une copie du titre de propriété (immeuble, droit au bail ou fonds de commerce) ; - Ou une copie de l’acte de domiciliation légalisé*. - Une copie du contrat de bail légalisé et enregistré ; - Ou une copie du reçu de loyer légalisé par le propriétaire ; - Ou une copie du titre de propriété (Immeuble, droit au bail ou fonds de commerce) ; - Ou une copie de l’acte de domiciliation légalisé* ; - Une copie des statuts enregistrés ; - Une copie de l’arrêté conjoint du ministre délégué au travail et aux affaires sociales et du ministre des finances ; - Une copie de la CNI du président du conseil d’administration de la société mutualiste. Cas des Groupements d’Intérêt Economique « GIE » Cas des établissements stables Cas des sociétés concessionnaires de service public - Une copie du contrat de groupement ; - Une copie de la CNI de l’administrateur du GIE ; - Une copie du contrat de bail légalisé et enregistré ; - Ou une copie du reçu de loyer légalisé par le propriétaire; - Ou une copie du titre de propriété (Immeuble, droit au bail ou fonds de commerce) ; - Ou une copie de l’acte de domiciliation légalisé*. - Une copie du contrat de bail ou d’acquisition enregistré et légalisé ; - Ou une copie de l’acte de domiciliation légalisé* ; - Une copie des statuts de la société mère, traduits le cas échéant ; - Une copie du PV de création de l'établissement stable ; - Une copie du marché ; - Une copie de la CNI, du passeport ou de la carte de séjour du représentant de l'établissement. - Une copie des statuts enregistrés ; - Une copie du contrat de concession ; - Une copie du contrat de bail légalisé et enregistré ; - Ou une copie du reçu de loyer légalisé par le propriétaire ; - Ou une copie du titre de propriété (immeuble, droit au bail ou fonds de commerce) ; - Ou une copie de l’acte de domiciliation légalisé*. Cas des fonds créés par voie législative ou réglementaire Cas des sociétés exploitant les centres de gestion de comptabilité agréée - Une copie de l’acte de création du fonds. - Une copie des statuts enregistrés ; - Une copie de l’agrément. A ………………………………… Le ……………… Qualité du signataire : …………………………………………………………… Signature : NB : - Pour les sociétés de fait, il faut produire toute pièce désignant l’associé principal. - Pour les autres formes juridiques d’entreprises, veuillez contacter le bureau d’accueil et de coordination. RAPPEL : - La déclaration d’existence (Modèle ADM050 pour les personnes morales et modèle ADP050 pour les personnes physiques) doit être souscrite dans un délai maximum de trente (30) jours suivant la date : - soit de leur constitution, s’il s’agit d’une société de droit marocain ou de leur installation, s’il s’agit d’une entreprise non résidente ; - soit du début de l’activité, s’il s’agit de contribuables personnes physiques ou groupements de personnes physiques, ayant des revenus professionnels. - La déclaration d’inscription au rôle de la Taxe Professionnelle (Modèle ADC061F) doit être souscrite dans un délai maximum de trente (30) jours suivant la date du début d’activité. * l’acte de domiciliation doit être établi par le propriétaire de l’immeuble ou du fonds de commerce ou bien par une personne inscrite aux rôles de la taxe professionnelle et qui ne soit pas elle-même domiciliée. L’acte de domiciliation doit mentionner les dispositions de l’article 93 du code de recouvrement des créances publiques.&nbsp;</p></div>`);
@@ -131,46 +132,7 @@ export default function TaxProfesionelle(props) {
         </div>
       </div>
     <GetFiles companyId={props.companyId} step={props.current_step}/>
-      <div className="flex">
-        <Fieldset className="mt-3" style={{ width: '20%', height: '140px' }} legend="Status de l'étape">
-          <form>
-            <div className="p-fluid formgrid grid">
-              <div className="flex justify-content-center">
-                <SelectButton value={btnStatus} onChange={(e) => {
-                  setBtnStatus(e.value);
-                  console.log(e.value);
-                  handleStatus();
-                }}
-                  options={options} itemTemplate={justifyTemplate} />
-              </div>
-
-            </div>
-          </form>
-        </Fieldset>
-        <Fieldset className="mt-3" style={{ width: '80%', height: '140px' }} legend="Action requise">
-          <form>
-            <div className="p-fluid formgrid grid">
-              <div className="field col-12 md:col-8">
-                <InputText
-                  id="nom"
-                  name="nom"
-                  value={status.actionRequise}
-                  placeholder="Action requise"
-                  onChange={(e) =>
-                    setStatus({
-                      ...status,
-                      actionRequise: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="field col-12 md:col-4">
-                <Button label="envoyer au client" onClick={handleActionRequise} />
-              </div>
-            </div>
-          </form>
-        </Fieldset>
-      </div>
+    <Status endpoint={`stepper/tax/${props.companyId}`} companyId={props.companyId} current_step={props.current_step}/>
     </>
   )
 }

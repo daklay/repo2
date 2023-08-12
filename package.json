@@ -21,6 +21,7 @@
         "eslint": "8.38.0",
         "eslint-config-next": "13.3.0",
         "formik": "^2.4.2",
+        "french-numbers-to-words": "^0.1.6",
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.5.29",
         "next": "13.2.3",
