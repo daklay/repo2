@@ -85,7 +85,7 @@ const LoginPage = () => {
                 htmlFor="email1"
                 className="block text-900 text-xl font-medium mb-2"
               >
-                Adresse e-mail
+                Adresse eeee-mail
               </label>
               <InputText
                 inputid="email1"

@@ -75,7 +75,14 @@ const EmptyPage = () => {
 
   const router = useRouter();
 
-  const [DataDomiciliations, setDataDomiciliations] = useState([]);
+  const [DataDomiciliations, setDataDomiciliations] = useState([{
+    id: 1,
+    libelle:  "test1",
+    email: "test@gmail.com",
+    telephone: "042425234",
+    etat: "noncomplete",
+    etap_active: "test",
+  }]);
 
   useEffect(() => {
     const getAllCompanies = async () => {
@@ -409,7 +416,7 @@ const EmptyPage = () => {
             >
               <Column
                 field="libelle"
-                header="Libellé du entreprise"
+                header="Libellé du entreprisee"
                 sortable
                 style={{ width: "20%" }}
               ></Column>
